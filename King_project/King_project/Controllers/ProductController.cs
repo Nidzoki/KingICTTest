@@ -5,6 +5,7 @@ using King_project.Entites;
 using Microsoft.Net.Http.Headers;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using System.Collections.Generic;
 
 namespace King_project.Controllers
 {
@@ -52,6 +53,60 @@ namespace King_project.Controllers
             }
             Console.WriteLine("Bad request!");
             return BadRequest(response.ReasonPhrase);
+        }
+
+        [HttpGet("{category}/{priceLimit}")]
+        public async Task<IActionResult> GetProductByCategoryAndPrice(string category, int priceLimit)
+        {
+
+            HttpResponseMessage categories = await client.GetAsync("https://dummyjson.com/products/category-list").ConfigureAwait(false);
+
+            var categoriesJSON = await categories.Content.ReadAsStringAsync();
+            
+            if (categoriesJSON.Contains(category) && priceLimit > 0)
+            {
+                Uri uri = new("https://dummyjson.com/products/category/" + category + "?select=id,title,price,description,images,category");
+
+                HttpResponseMessage response = await client.GetAsync(uri).ConfigureAwait(false);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+
+
+
+                    var products = JsonSerializer.Deserialize<ProductsResponse>(json, options);
+
+                    var filteredProducts = products.Products.Where(product => product.Price <= priceLimit);
+
+                    return Ok(filteredProducts);
+                }
+                Console.WriteLine("Bad request!");
+                return BadRequest(response.ReasonPhrase);
+            }
+
+            return BadRequest("Category doesn't exist or price limit is lesser than zero!");
+        }
+
+        [HttpGet("name/{name}")]
+        public async Task<IActionResult> GetProductByCategoryAndPrice(string name)
+        {
+            Uri uri = new("https://dummyjson.com/products/search?q="+name+"&select=id,title,price,description,images,category");
+
+            HttpResponseMessage response = await client.GetAsync(uri).ConfigureAwait(false);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+
+
+
+                var product = JsonSerializer.Deserialize<ProductsResponse>(json, options);
+                return Ok(product);
+            }
+            Console.WriteLine("Bad request!");
+            return BadRequest(response.ReasonPhrase);
+
         }
     }
 

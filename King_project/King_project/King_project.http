@@ -1,6 +1,7 @@
 @King_project_HostAddress = http://localhost:5259
 
-GET {{King_project_HostAddress}}/weatherforecast/
+GET {{King_project_HostAddress}}/api/Product
 Accept: application/json
+
 
 ###
