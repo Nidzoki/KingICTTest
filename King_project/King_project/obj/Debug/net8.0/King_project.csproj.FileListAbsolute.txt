@@ -32,3 +32,4 @@ C:\Users\nikol\Desktop\King_project\King_project\King_project\obj\Debug\net8.0\K
 C:\Users\nikol\Desktop\King_project\King_project\King_project\obj\Debug\net8.0\ref\King_project.dll
 C:\Users\nikol\Desktop\King_project\King_project\King_project\bin\Debug\net8.0\libman.json
 C:\Users\nikol\Desktop\King_project\King_project\King_project\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\nikol\Desktop\King_project\King_project\King_project\obj\Debug\net8.0\King_project.sourcelink.json
