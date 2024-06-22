@@ -18,7 +18,7 @@ namespace King_project.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllProducts()
         {
-            Uri uri = new("https://dummyjson.com/products?select=id,title,price,description,images");
+            Uri uri = new("https://dummyjson.com/products?select=id,title,price,description,images,category");
             HttpResponseMessage response = await client.GetAsync(uri).ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)
@@ -30,14 +30,14 @@ namespace King_project.Controllers
                 var products = JsonSerializer.Deserialize<ProductsResponse>(json, options);
                 return Ok(products);
             }
-
+            Console.WriteLine("Bad request!");
             return BadRequest(response.ReasonPhrase);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProduct(int id)
         {
-            Uri uri = new("https://dummyjson.com/products/" + id.ToString() + "?select=id,title,price,description,images");
+            Uri uri = new("https://dummyjson.com/products/" + id.ToString() + "?select=id,title,price,description,images,category");
 
             HttpResponseMessage response = await client.GetAsync(uri).ConfigureAwait(false);
 
@@ -50,7 +50,7 @@ namespace King_project.Controllers
                 var product = JsonSerializer.Deserialize<Product>(json, options);
                 return Ok(product);
             }
-
+            Console.WriteLine("Bad request!");
             return BadRequest(response.ReasonPhrase);
         }
     }

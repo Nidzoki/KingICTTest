@@ -7,6 +7,7 @@
         public string Description { get; set; } = string.Empty;
         public float Price { get; set; }
         public string[]? Images { get; set; }
+        public string Category { get; set; } = string.Empty;
 
     }
 }
