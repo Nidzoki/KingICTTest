@@ -25,10 +25,30 @@ namespace King_project.Controllers
             {
                 var json = await response.Content.ReadAsStringAsync();
 
-                
+
 
                 var products = JsonSerializer.Deserialize<ProductsResponse>(json, options);
-                return Ok(products );
+                return Ok(products);
+            }
+
+            return BadRequest(response.ReasonPhrase);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProduct(int id)
+        {
+            Uri uri = new("https://dummyjson.com/products/" + id.ToString() + "?select=id,title,price,description,images");
+
+            HttpResponseMessage response = await client.GetAsync(uri).ConfigureAwait(false);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+
+
+
+                var product = JsonSerializer.Deserialize<Product>(json, options);
+                return Ok(product);
             }
 
             return BadRequest(response.ReasonPhrase);
