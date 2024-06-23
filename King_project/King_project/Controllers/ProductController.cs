@@ -6,6 +6,7 @@ using Microsoft.Net.Http.Headers;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace King_project.Controllers
 {
@@ -16,7 +17,7 @@ namespace King_project.Controllers
         static readonly HttpClient client = new();
         readonly JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
 
-        [HttpGet]
+        [HttpGet,Authorize]
         public async Task<IActionResult> GetAllProducts()
         {
             Uri uri = new("https://dummyjson.com/products?select=id,title,price,description,images,category");
@@ -35,7 +36,7 @@ namespace King_project.Controllers
             return BadRequest(response.ReasonPhrase);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}"),Authorize]
         public async Task<IActionResult> GetProduct(int id)
         {
             Uri uri = new("https://dummyjson.com/products/" + id.ToString() + "?select=id,title,price,description,images,category");
@@ -55,7 +56,7 @@ namespace King_project.Controllers
             return BadRequest(response.ReasonPhrase);
         }
 
-        [HttpGet("{category}/{priceLimit}")]
+        [HttpGet("{category}/{priceLimit}"),Authorize]
         public async Task<IActionResult> GetProductByCategoryAndPrice(string category, int priceLimit)
         {
 
@@ -88,7 +89,7 @@ namespace King_project.Controllers
             return BadRequest("Category doesn't exist or price limit is lesser than zero!");
         }
 
-        [HttpGet("name/{name}")]
+        [HttpGet("name/{name}"),Authorize]
         public async Task<IActionResult> GetProductByCategoryAndPrice(string name)
         {
             Uri uri = new("https://dummyjson.com/products/search?q="+name+"&select=id,title,price,description,images,category");
