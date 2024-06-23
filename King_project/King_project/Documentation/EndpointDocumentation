@@ -1,0 +1,149 @@
+### 
+### Get All Products
+
+**Description**: returns a list of all products
+
+**URL**: `/api/Product`
+
+**HTTP method**: GET
+
+**Parameters**:
+(none)
+
+**Request example**:
+```http
+GET /api/Product
+Host: localhost:7278
+Authorization: Bearer token
+```
+**Response example**:
+```json
+{
+  "products":[
+	"id":1,
+	"title": "Essence Mascara Lash Princess",
+      "description": "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
+      "price": 9.99,
+      "images": [
+        "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png"
+      ],
+      "category": "beauty"
+]
+}
+```
+
+**Status codes**:
+- `200 OK` - Successful
+- `401 Unauthorized` - The client isn't authenticated
+- `403 Forbidden` - The client does not have access rights to the content
+
+---
+### Get Product
+
+**Description**: returns only one product by ID
+
+**URL**: `/api/Product/{id}`
+
+**HTTP method**: GET
+
+**Parameters**:
+- `id` (integer) : product ID (required)
+
+**Request example**:
+```http
+GET /api/Product/1
+Host: localhost:7278
+Authorization: Bearer token
+```
+**Response example**:
+```json
+{ 
+	"id": 1,
+	"title": "Essence Mascara Lash Princess",
+	"description": "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
+	"price": 9.99,
+	"images": 	 ["https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png" ],
+	"category": "beauty" 
+}
+```
+
+**Status codes**:
+- `200 OK` - Successful
+- `401 Unauthorized` - The client isn't authenticated
+- `403 Forbidden` - The client does not have access rights to the content
+---
+### Get products by category and price
+
+**Description**: returns a list of products filtered by category and price limit
+
+**URL**: `/api/Product/{category}/{priceLimit}`
+
+**HTTP method**: GET
+
+**Parameters**:
+- `category` (string) : category of product (required)
+- `priceLimit` (integer) : price limit of the product (required)
+
+**Request example**:
+```http
+GET /api/Product/fragrances/60
+Host: localhost:7278
+Authorization: Bearer token
+```
+**Response example**:
+```json
+[ 
+	{ 
+		"id": 6,
+		"title": "Calvin Klein CK One",
+		"description": "CK One by Calvin Klein is a classic unisex fragrance, known for its fresh and clean scent. It's a versatile fragrance suitable for everyday wear.",
+		"price": 49.99,
+		"images": [ "https://cdn.dummyjson.com/products/images/fragrances/Calvin%20Klein%20CK%20One/1.png",
+		"https://cdn.dummyjson.com/products/images/fragrances/Calvin%20Klein%20CK%20One/2.png", 
+		"https://cdn.dummyjson.com/products/images/fragrances/Calvin%20Klein%20CK%20One/3.png" ],
+		 "category": "fragrances" 
+	} 
+]
+```
+
+**Status codes**:
+- `200 OK` - Successful
+- `401 Unauthorized` - The client isn't authenticated
+- `403 Forbidden` - The client does not have access rights to the content
+---
+### Get products by search
+
+**Description**: returns a list of products filtered by similarity to the given string parameter
+
+**URL**: `/api/Product/search/{search}`
+
+**HTTP method**: GET
+
+**Parameters**:
+- `search` (string) : search string (required)
+
+**Request example**:
+```http
+GET /api/Product/search/mascarra
+Host: localhost:7278
+Authorization: Bearer token
+```
+**Response example**:
+```json
+{ 
+"products": [ 
+	{ "id": 1,
+	  "title": "Essence Mascara Lash Princess",
+	  "description": "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
+	  "price": 9.99,
+	  "images": [ "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png" ],
+	  "category": "beauty" 
+	  } 
+	] 
+}
+```
+
+**Status codes**:
+- `200 OK` - Successful
+- `401 Unauthorized` - The client isn't authenticated
+- `403 Forbidden` - The client does not have access rights to the content

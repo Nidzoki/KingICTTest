@@ -57,7 +57,7 @@ namespace King_project.Controllers
         }
 
         [HttpGet("{category}/{priceLimit}"),Authorize]
-        public async Task<IActionResult> GetProductByCategoryAndPrice(string category, int priceLimit)
+        public async Task<IActionResult> GetProductsByCategoryAndPrice(string category, int priceLimit)
         {
 
             HttpResponseMessage categories = await client.GetAsync("https://dummyjson.com/products/category-list").ConfigureAwait(false);
@@ -89,10 +89,10 @@ namespace King_project.Controllers
             return BadRequest("Category doesn't exist or price limit is lesser than zero!");
         }
 
-        [HttpGet("name/{name}"),Authorize]
-        public async Task<IActionResult> GetProductByCategoryAndPrice(string name)
+        [HttpGet("search/{search}"),Authorize]
+        public async Task<IActionResult> GetProductsBySearch(string search)
         {
-            Uri uri = new("https://dummyjson.com/products/search?q="+name+"&select=id,title,price,description,images,category");
+            Uri uri = new("https://dummyjson.com/products/search?q=" + search + "&select=id,title,price,description,images,category");
 
             HttpResponseMessage response = await client.GetAsync(uri).ConfigureAwait(false);
 
